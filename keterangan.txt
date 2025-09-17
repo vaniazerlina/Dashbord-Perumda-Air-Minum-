@@ -1,0 +1,60 @@
+Penjelasan File dalam Proyek ETL dan Dashboard
+extract.py
+Script untuk mengambil (extract) data dari database operasional. Data yang diambil berupa data mentah yang nantinya akan diproses lebih lanjut.
+
+transform.py
+Script untuk mengubah (transform) data mentah menjadi format yang sudah dibersihkan, distandardisasi, dan siap dimuat ke data warehouse.
+
+load.py
+Script untuk memuat (load) data hasil transformasi ke dalam data warehouse, menggunakan koneksi ke database tujuan.
+
+etl_monthly.py
+Script untuk menjalankan proses ETL bulanan secara otomatis. Script ini akan mengecek bulan-bulan yang belum diproses di tabel etl_history, lalu menjalankan extract, transform, dan load untuk setiap bulan tersebut.
+
+etl.bat
+Script batch untuk menjalankan etl_monthly.py melalui sistem operasi Windows. Berguna untuk menjadwalkan proses ETL otomatis menggunakan Windows Task Scheduler.
+
+proses.py
+Halaman Streamlit untuk menjalankan proses ETL secara manual melalui antarmuka web. Cocok digunakan jika pengguna ingin menjalankan ETL tanpa harus membuka command line.
+
+dashboard.py
+Halaman Streamlit untuk menampilkan berbagai visualisasi data hasil proses ETL. Data ditampilkan berdasarkan data yang telah disimpan di data warehouse.
+
+forecast.py
+Script untuk halaman prediksi (forecasting) dalam dashboard. Berisi logika model prediksi dan visualisasi hasil forecasting, yang dipanggil oleh dashboard.py.
+
+
+Cara Menjadwalkan etl.bat di Windows Task Scheduler
+1. Buka Task Scheduler:
+- Tekan Win + S, ketik Task Scheduler, lalu buka aplikasi tersebut.
+2. Buat Task Baru:
+- Klik "Create Basic Task" di panel kanan.
+- Beri nama misalnya: ETL Bulanan.
+3. Pilih Jadwal:
+- Pilih opsi Monthly.
+- Tentukan bulan dan tanggal yang diinginkan (misalnya setiap tanggal 1).
+4. Pilih Aksi:
+- Pilih Start a program.
+5. Arahkan ke File etl.bat:
+- Klik Browse, lalu pilih file etl.bat yang ada di folder proyek kamu.
+6. Selesai:
+- Klik Finish. Task akan otomatis dijalankan sesuai jadwal yang kamu tetapkan.
+
+
+Isi Folder models dan cache:
+cache/forecast.pkl
+Menyimpan grafik hasil prediksi keseluruhan dan per wilayah. Jika membuka sistem kembali, hasil prediksi sebelumnya dapat dipanggil kembali.
+
+models/
+sarimax_overall: Model untuk pendapatan keseluruhan.
+sarimax_PS: Model untuk wilayah pusat.
+sarimax_SN: Model untuk wilayah selatan.
+sarimax_UT: Model untuk wilayah utara.
+
+Folder .streamlit:
+Digunakan untuk mencustom tampilan Streamlit.
+
+Cara Menjalankan Aplikasi:
+Untuk menjalankan aplikasi, gunakan perintah berikut:
+- streamlit run dashboard/dashboard.py
+- Setelah aplikasi berjalan, pergi ke Settings dan aktifkan wide mode agar tampilan Streamlit tidak sempit.

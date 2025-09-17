@@ -1,0 +1,34 @@
+Tahapan Mengimpor File Custom Format (.sql) ke PostgreSQL (OLTP)
+
+1. Buka CMD (Command Prompt)
+Gunakan CMD dengan hak akses biasa, tidak perlu administrator.
+
+2. Buat Database Tujuan (jika belum ada)
+createdb -h localhost -p 5433 -U postgres perumda_db
+-h localhost → host database
+-p 5433 → port PostgreSQL
+-U postgres → user PostgreSQL
+perumda_db → nama database tujuan (ubah jadi perumda)
+
+3. Restore Ulang dengan Opsi Tambahan Agar Aman
+pg_restore -h localhost -p 5433 -U postgres -d perumda_db --clean --if-exists --no-owner "D:\kuliah\semester 8\TA\project\database_oltp.sql"
+Penjelasan flag:
+-clean → hapus objek lama jika sudah ada
+-if-exists → cegah error jika objek tidak ditemukan
+-no-owner → lewati pengaturan owner 
+
+
+
+
+Tahapan Impor File .sql ke PostgreSQL (Data Mart)
+1. Buka Command Prompt (CMD)
+
+2. Buat Database Baru: test_2_db
+createdb -h localhost -p 5433 -U postgres test_2_db
+test_2_db = ubah menjadi test_perumda
+
+3. Impor File SQL (data mart.sql) ke test_2_db
+psql -h localhost -p 5433 -U postgres -d test_2_db -f "D:\kuliah\semester 8\TA\project\data mart.sql"
+penjelasan flag:
+-d test_2_db → nama database tujuan
+-f → lokasi file SQL yang akan diimpor
